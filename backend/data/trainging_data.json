@@ -1,0 +1,304 @@
+{
+    "samples" : [  
+    {
+      "inputs": "### Instruction: List the names of startups participating in marketing events. \n\n### Response:\nSELECT company_name FROM company WHERE company_type='Startup' AND event_url IN (SELECT event_url FROM event WHERE company_industry LIKE '%Marketing%');"
+    },
+    {
+      "inputs": "### Instruction: Identify companies specializing in renewable energy technologies. \n\n### Response:\nSELECT * FROM company WHERE company_industry LIKE 'Renewable Energy';"
+    },
+    {
+      "inputs": "### Instruction: Find events focused on artificial intelligence happening in Japan within the next six months. \n\n### Response:\nSELECT * FROM event WHERE event_country LIKE '%Japan%' AND event_start_date BETWEEN DATE('now') AND DATE('now', '+6 month') AND event_description='Artificial Intelligence';"
+    },
+    {
+      "inputs": "### Instruction: List the job titles of individuals working in the healthcare sector. \n\n### Response:\nSELECT job_title FROM people WHERE homepage_base_url IN (SELECT homepage_base_url FROM company WHERE company_industry LIKE '%Healthcare%');"
+    },
+    {
+      "inputs": "### Instruction: Retrieve the names and descriptions of technology conferences scheduled for next year. \n\n### Response:\nSELECT event_name, event_description FROM event WHERE company_industry LIKE 'Technology' AND event_start_date BETWEEN DATE('now') AND DATE('now', '+1 year');"
+    },
+    {
+      "inputs": "### Instruction: List the email addresses of people working in the automotive industry. \n\n### Response:\nSELECT email_pattern FROM people WHERE homepage_base_url IN (SELECT homepage_base_url FROM company WHERE company_industry LIKE '%Automotive%');"
+    },
+    {
+      "inputs": "### Instruction: Find events related to sustainability where companies have a revenue above $50 million. \n\n### Response:\nSELECT * FROM event WHERE event_url IN (SELECT event_url FROM company WHERE company_revenue > 50000000 AND company_industry LIKE '%Sustainability%');"
+    },
+    {
+      "inputs": "### Instruction: Identify companies in the healthcare sector with annual revenue exceeding $1 billion. \n\n### Response:\nSELECT company_name, company_revenue FROM company WHERE company_industry LIKE '%Healthcare%' AND company_revenue > 1000000000;"
+    },
+    {
+      "inputs": "### Instruction: List the names and job titles of people who have been in their current role for more than 5 years. \n\n### Response:\nSELECT first_name, last_name, job_title FROM people WHERE duration_in_current_job > 5;"
+    },
+    {
+      "inputs": "### Instruction: Find events hosted in San Francisco that are related to environmental sustainability. \n\n### Response:\nSELECT event_name, event_description FROM event WHERE event_venue='San Francisco' AND event_description LIKE '%environmental sustainability%';"
+    },
+    {
+      "inputs": "### Instruction: Retrieve the emails of salespeople working in companies that are attending events in the next 3 months. \n\n### Response:\nSELECT email_pattern FROM people WHERE job_title LIKE '%sales%' AND homepage_base_url IN (SELECT homepage_base_url FROM company WHERE event_url IN (SELECT event_url FROM event WHERE event_start_date BETWEEN DATE('now') AND DATE('now', '+3 month'));"
+    },
+    {
+      "inputs": "### Instruction: List the names and addresses of companies founded after 2010 that are attending AI conferences. \n\n### Response:\nSELECT company_name, company_address FROM company WHERE founding_year > 2010 AND event_url IN (SELECT event_url FROM event WHERE event_description='AI');"
+    },
+    {
+      "inputs": "### Instruction: Find the average revenue of companies participating in fintech events. \n\n### Response:\nSELECT AVG(company_revenue) AS avg_revenue_fintech FROM company WHERE event_url IN (SELECT event_url FROM event WHERE event_description='Fintech');"
+    },
+    {
+      "inputs": "### Instruction: Identify people with a background in data science working for companies in the technology sector. \n\n### Response:\nSELECT first_name, last_name FROM people WHERE job_title LIKE '%data science%' AND homepage_base_url IN (SELECT homepage_base_url FROM company WHERE company_industry LIKE 'Technology');"
+    },
+    {
+      "inputs": "### Instruction: List the countries hosting the highest number of events in the upcoming quarter. \n\n### Response:\nSELECT event_country, COUNT(*) AS event_count FROM event WHERE event_start_date BETWEEN DATE('now') AND DATE('now', '+3 month') GROUP BY event_country ORDER BY event_count DESC LIMIT 1;"
+    },
+    {
+      "inputs": "### Instruction: Retrieve the names of companies that have participated in more than 3 events in the last year. \n\n### Response:\nSELECT company_name FROM company WHERE event_url IN (SELECT event_url FROM event WHERE event_start_date BETWEEN DATE('now', '-1 year') AND DATE('now')) GROUP BY company_name HAVING COUNT(event_url) > 3;"
+    },
+    {
+      "inputs": "### Instruction: Find the total number of employees across all companies in the renewable energy sector. \n\n### Response:\nSELECT SUM(n_employees) AS total_employees_renewable FROM company WHERE company_industry LIKE '%Renewable Energy%';"
+    },
+    {
+      "inputs": "### Instruction: List the job titles and countries of people working in companies that are attending events in London. \n\n### Response:\nSELECT job_title, person_country FROM people WHERE homepage_base_url IN (SELECT homepage_base_url FROM company WHERE event_url IN (SELECT event_url FROM event WHERE event_venue='London');"
+    },
+    {
+      "inputs": "### Instruction: Identify companies with fewer than 50 employees that are attending blockchain events. \n\n### Response:\nSELECT company_name FROM company WHERE n_employees < 50 AND event_url IN (SELECT event_url FROM event WHERE event_description='Blockchain');"
+    },
+    {
+      "inputs": "### Instruction: Find the names and start dates of events where companies with a revenue under $100 million are participating. \n\n### Response:\nSELECT event_name, event_start_date FROM event WHERE event_url IN (SELECT event_url FROM company WHERE company_revenue < 100000000);"
+    },
+    {
+      "inputs": "### Instruction: List the email of people working in marketing who are attending events outside their home country. \n\n### Response:\nSELECT email_pattern FROM people WHERE job_title LIKE '%marketing%' AND person_country <> (SELECT event_country FROM event WHERE event_url IN (SELECT event_url FROM company WHERE homepage_base_url=people.homepage_base_url));"
+    },
+    {
+      "inputs": "### Instruction: Retrieve the names and industries of companies attending cybersecurity events, along with the event descriptions. \n\n### Response:\nSELECT company_name, company_industry, (SELECT event_description FROM event WHERE event_url=company.event_url) AS event_description FROM company WHERE event_url IN (SELECT event_url FROM event WHERE company_industry LIKE '%Cybersecurity%');"
+    },
+    {
+      "inputs": "### Instruction: Find the average tenure of sales executives at companies. \n\n### Response:\nSELECT AVG(duration_in_current_job) AS avg_tenure_sales_executives FROM people WHERE job_title LIKE '%sales executive%';"
+    },
+    {
+      "inputs": "### Instruction: List the venues of events that are expected to attract more than 500 attendees. \n\n### Response:\nSELECT event_venue FROM event WHERE expected_attendee_count > 500;"
+    },
+    {
+      "inputs": "### Instruction: Identify companies that have increased their employee count by more than 10% in the last year. \n\n### Response:\nSELECT company_name FROM company WHERE n_employees > (SELECT n_employees * 1.1 FROM company WHERE fiscal_year = (SELECT MAX(fiscal_year) - 1);"
+    },
+    {
+      "inputs": "### Instruction: Retrieve the names of events focused on digital transformation happening within the next month. \n\n### Response:\nSELECT event_name FROM event WHERE event_description='Digital Transformation' AND event_start_date BETWEEN DATE('now') AND DATE('now', '+1 month');"
+    },
+    {
+      "inputs": "### Instruction: Find people who have worked for more than one company in the finance sector. \n\n### Response:\nSELECT DISTINCT first_name, last_name FROM people WHERE job_title IN (SELECT job_title FROM people GROUP BY homepage_base_url HAVING COUNT(homepage_base_url) > 1) AND homepage_base_url IN (SELECT homepage_base_url FROM company WHERE company_industry LIKE 'Finance');"
+    },
+    {
+      "inputs": "### Instruction: List the countries and venues of events related to cloud computing. \n\n### Response:\nSELECT event_country, event_venue FROM event WHERE event_description LIKE '%cloud computing%';"
+    },
+    {
+      "inputs": "### Instruction: Identify companies that are attending events in industries different from their own. \n\n### Response:\nSELECT DISTINCT c.company_name FROM company c JOIN event e ON c.event_url=e.event_url WHERE c.company_industry <> e.industry;"
+    },
+    {
+      "inputs": "### Instruction: Find companies with more than 1000 employees attending finance-related events. \n\n### Response:\nSELECT company_name, company_industry, event_name, event_start_date, event_venue FROM company INNER JOIN event ON company.event_url = event.event_url WHERE company_industry LIKE '%Finance%' AND company.n_employees > 1000;"
+    },
+    {
+      "inputs": "### Instruction: Retrieve the names and addresses of companies participating in cybersecurity events. \n\n### Response:\nSELECT company_name, company_address FROM company WHERE event_url IN (SELECT event_url FROM event WHERE company_industry LIKE '%Cybersecurity%');"
+    },
+    {
+      "inputs": "### Instruction: List the job titles of individuals working in the healthcare sector. \n\n### Response:\nSELECT job_title FROM people WHERE homepage_base_url IN (SELECT homepage_base_url FROM company WHERE company_industry LIKE '%Healthcare%');"
+    },
+    {
+      "inputs": "### Instruction: Find events focused on artificial intelligence happening in Europe within the next six months. \n\n### Response:\nSELECT event_name, event_start_date FROM event WHERE event_country='Europe' AND event_start_date BETWEEN DATE('now') AND DATE('now', '+6 month') AND event_description='Artificial Intelligence';"
+    },
+    {
+      "inputs": "### Instruction: Identify companies specializing in renewable energy technologies. \n\n### Response:\nSELECT company_name, company_industry FROM company WHERE company_industry LIKE '%Renewable Energy%';"
+    },
+    {
+      "inputs": "### Instruction: Find companies with more than 1000 employees attending finance-related events. \n\n### Response:\nSELECT company_name, company_industry, event_name, event_start_date, event_venue FROM company INNER JOIN event ON company.event_url = event.event_url WHERE company_industry LIKE '%Finance%' AND company.n_employees > 1000;"
+    },
+    {
+      "inputs": "### Instruction: Retrieve the names and addresses of companies participating in cybersecurity events. \n\n### Response:\nSELECT company_name, company_address FROM company WHERE event_url IN (SELECT event_url FROM event WHERE company_industry LIKE '%Cybersecurity%');"
+    },
+    {
+      "inputs": "### Instruction: List the job titles of individuals working in the healthcare sector. \n\n### Response:\nSELECT job_title FROM people WHERE homepage_base_url IN (SELECT homepage_base_url FROM company WHERE company_industry LIKE '%Healthcare%');"
+    },
+    {
+      "inputs": "### Instruction: Find events focused on artificial intelligence happening in Europe within the next six months. \n\n### Response:\nSELECT event_name, event_start_date FROM event WHERE event_country='Europe' AND event_start_date BETWEEN DATE('now') AND DATE('now', '+6 month') AND event_description='Artificial Intelligence';"
+    },
+    {
+      "inputs": "### Instruction: Identify companies specializing in renewable energy technologies. \n\n### Response:\nSELECT company_name, company_industry FROM company WHERE company_industry LIKE '%Renewable Energy%';"
+    },
+    {
+      "inputs": "### Instruction: List the names of companies that offer remote work opportunities. \n\n### Response:\nSELECT company_name FROM company WHERE company_phone LIKE '%remote%';"
+    },
+    {
+      "inputs": "### Instruction: Find events that mention 'innovation' in their descriptions, occurring in the next 6 months. \n\n### Response:\nSELECT event_name, event_start_date FROM event WHERE event_description LIKE '%innovation%' AND event_start_date BETWEEN DATE('now') AND DATE('now', '+6 month');"
+    },
+    {
+      "inputs": "### Instruction: Retrieve the contact details of companies in the tech industry. \n\n### Response:\nSELECT company_name, company_phone, company_email FROM company WHERE company_industry LIKE '%Tech%';"
+    },
+    {
+      "inputs": "### Instruction: Identify companies that have been founded in the last 10 years and are attending events related to sustainability. \n\n### Response:\nSELECT company_name FROM company WHERE founding_year >= 2013 AND event_url IN (SELECT event_url FROM event WHERE event_description LIKE '%sustainability%');"
+    },
+    {
+      "inputs": "### Instruction: List the names and cities of people working in startups. \n\n### Response:\nSELECT first_name, last_name, person_city FROM people WHERE job_title LIKE '%startup%';"
+    },
+    {
+      "inputs": "### Instruction: Find events that are taking place in the United States and focus on healthcare. \n\n### Response:\nSELECT event_name, event_start_date FROM event WHERE event_country LIKE '%United States%' AND event_description LIKE '%healthcare%';"
+    },
+    {
+      "inputs": "### Instruction: Retrieve the URLs of company homepages that are also used as event pages. \n\n### Response:\nSELECT homepage_url FROM company WHERE homepage_url = event_url;"
+    },
+    {
+      "inputs": "### Instruction: Identify companies with a LinkedIn URL containing 'linkedin.com/company'. \n\n### Response:\nSELECT company_name FROM company WHERE linkedin_company_url LIKE '%linkedin.com/company%';"
+    },
+    {
+      "inputs": "### Instruction: List the names of events that are part of a series, indicated by 'Series' in the event description. \n\n### Response:\nSELECT event_name FROM event WHERE event_description LIKE '%Series%';"
+    },
+    {
+      "inputs": "### Instruction: Identify events that are free to attend, as indicated by 'Free' in the event description. \n\n### Response:\nSELECT event_name FROM event WHERE event_description LIKE '%Free%';"
+    },
+    {
+      "inputs": "### Instruction: Find events organized by companies in the automotive industry that are not located in the United States. \n\n### Response:\nSELECT event_name, event_venue FROM event INNER JOIN company ON event.organizer_id = company.company_id WHERE company_industry LIKE '%Automotive%' AND event_country !LIKE '%United States%';"
+    },
+    {
+      "inputs": "### Instruction: List the top 5 countries hosting the most events in the next quarter. \n\n### Response:\nSELECT event_country, COUNT(*) AS event_count FROM event WHERE event_start_date BETWEEN DATE('now') AND DATE('now', '+3 month') GROUP BY event_country ORDER BY event_count DESC LIMIT 5;"
+    },
+    {
+      "inputs": "### Instruction: Find events focused on climate change mitigation strategies happening in Singapore. \n\n### Response:\nSELECT event_name, event_start_date FROM event WHERE event_country LIKE '%Singapore%' AND event_description LIKE '%climate change mitigation%';"
+    },
+    {
+      "inputs": "### Instruction: Find companies in the tech industry. \n\n### Response:\nSELECT company_name FROM company WHERE company_industry LIKE '%Tech%';"
+    },
+    {
+      "inputs": "### Instruction: Find events with 'digital transformation' in their descriptions. \n\n### Response:\nSELECT event_name, event_start_date FROM event WHERE event_description LIKE '%digital transformation%';"
+    },
+    {
+      "inputs": "### Instruction: List companies with 'AI' in their industry descriptions. \n\n### Response:\nSELECT company_name, company_industry FROM company WHERE company_overview LIKE '%AI%';"
+    },
+    {
+      "inputs": "### Instruction: Retrieve names of people with 'engineer' roles. \n\n### Response:\nSELECT first_name, last_name FROM people WHERE job_title LIKE '%engineer%';"
+    },
+    {
+      "inputs": "### Instruction: Identify events happening in 'New York' within the next month. \n\n### Response:\nSELECT event_name, event_venue FROM event WHERE event_venue LIKE 'New York' AND event_start_date BETWEEN DATE('now') AND DATE('now', '+1 month');"
+    },
+    {
+      "inputs": "### Instruction: Find companies founded after '2000' attending events. \n\n### Response:\nSELECT company_name FROM company WHERE founding_year > 2000 AND event_url IN (SELECT event_url FROM event);"
+    },
+    {
+      "inputs": "### Instruction: List people with 'data science' background in tech companies. \n\n### Response:\nSELECT first_name, last_name FROM people WHERE job_title LIKE '%data science%' AND homepage_base_url IN (SELECT homepage_base_url FROM company WHERE company_industry LIKE 'Tech');"
+    },
+    {
+      "inputs": "### Instruction: Retrieve companies with 'cybersecurity' in their industry attending events. \n\n### Response:\nSELECT company_name FROM company WHERE company_industry LIKE '%cybersecurity%' AND event_url IN (SELECT event_url FROM event);"
+    },
+    {
+      "inputs": "### Instruction: List companies with 'finance' in their industry descriptions. \n\n### Response:\nSELECT company_name FROM company WHERE company_overview LIKE '%finance%';"
+    },
+    {
+      "inputs": "### Instruction: Identify people with 'designer' roles. \n\n### Response:\nSELECT first_name, last_name FROM people WHERE job_title LIKE '%designer%';"
+    },
+    {
+      "inputs": "### Instruction: Find events related to 'sustainability' happening in 'Singapore'. \n\n### Response:\nSELECT event_name, event_venue FROM event WHERE event_description LIKE '%sustainability%' AND event_country='Singapore';"
+    },
+    {
+      "inputs": "### Instruction: List companies with 'energy' in their industry descriptions. \n\n### Response:\nSELECT company_name FROM company WHERE company_overview LIKE '%energy%';"
+    },
+    {
+      "inputs": "### Instruction: Retrieve names of people with 'marketing' background in tech companies. \n\n### Response:\nSELECT first_name, last_name FROM people WHERE job_title LIKE '%marketing%' AND homepage_base_url IN (SELECT homepage_base_url FROM company WHERE company_industry LIKE 'Tech');"
+    },
+    {
+      "inputs": "### Instruction: Find events focused on 'innovation' within the next six months. \n\n### Response:\nSELECT event_name, event_start_date FROM event WHERE event_description LIKE '%innovation%' AND event_start_date BETWEEN DATE('now') AND DATE('now', '+6 month);"
+    },
+    {
+      "inputs": "### Instruction: List companies with 'medical' in their industry descriptions. \n\n### Response:\nSELECT company_name FROM company WHERE company_overview LIKE '%medical%';"
+    },
+    {
+      "inputs": "### Instruction: Identify people with 'consultant' roles. \n\n### Response:\nSELECT first_name, last_name FROM people WHERE job_title LIKE '%consultant%';"
+    },
+    {
+      "inputs": "### Instruction: Find people with 'data analyst' roles. \n\n### Response:\nSELECT first_name, last_name FROM people WHERE job_title LIKE '%data analyst%';"
+    },
+    {
+      "inputs": "### Instruction: List companies with 'cloud computing' in their industry descriptions. \n\n### Response:\nSELECT company_name FROM company WHERE company_overview LIKE '%cloud computing%';"
+    },
+    {
+      "inputs": "### Instruction: Retrieve names of people with 'senior' roles. \n\n### Response:\nSELECT first_name, last_name FROM people WHERE job_title LIKE '%senior%';"
+    },
+    {
+      "inputs": "### Instruction: Identify companies with 'e-commerce' in their industry descriptions. \n\n### Response:\nSELECT company_name FROM company WHERE company_overview LIKE '%e-commerce%';"
+    },
+    {
+      "inputs": "### Instruction: Identify companies with 'nanotechnology' in their industry descriptions. \n\n### Response:\nSELECT company_name FROM company WHERE company_overview LIKE '%nanotechnology%';"
+    },
+    {
+      "inputs": "### Instruction: Find people with 'quality assurance' roles. \n\n### Response:\nSELECT first_name, last_name FROM people WHERE job_title LIKE '%quality assurance%';"
+    },
+    {
+      "inputs": "### Instruction: List companies with 'aerospace' in their industry descriptions. \n\n### Response:\nSELECT company_name FROM company WHERE company_overview LIKE '%aerospace%';"
+    },
+    {
+      "inputs": "### Instruction: Retrieve names of people with 'frontend developer' roles. \n\n### Response:\nSELECT first_name, last_name FROM people WHERE job_title LIKE '%frontend developer%';"
+    },
+    {
+      "inputs": "### Instruction: Identify companies with 'cybersecurity' in their industry descriptions. \n\n### Response:\nSELECT company_name FROM company WHERE company_overview LIKE '%cybersecurity%';"
+    },
+    {
+      "inputs": "### Instruction: Find people with 'backend developer' roles. \n\n### Response:\nSELECT first_name, last_name FROM people WHERE job_title LIKE '%backend developer%';"
+    },
+    {
+      "inputs": "### Instruction: List companies with 'renewable energy' in their industry descriptions. \n\n### Response:\nSELECT company_name FROM company WHERE company_overview LIKE '%renewable energy%';"
+    },
+    {
+      "inputs": "### Instruction: Retrieve people with 'content creator' roles. \n\n### Response:\nSELECT first_name, last_name FROM people WHERE job_title LIKE '%content creator%';"
+    },
+    {
+      "inputs": "### Instruction: Identify companies with 'quantum computing' in their industry descriptions. \n\n### Response:\nSELECT company_name FROM company WHERE company_overview LIKE '%quantum computing%';"
+    },
+    {
+      "inputs": "### Instruction: Find people with 'SEO specialist' roles. \n\n### Response:\nSELECT first_name, last_name FROM people WHERE job_title LIKE '%SEO specialist%';"
+    },
+    {
+      "inputs": "### Instruction: List companies with '3D printing' in their industry descriptions. \n\n### Response:\nSELECT company_name FROM company WHERE company_overview LIKE '%3D printing%';"
+    },
+    {
+      "inputs": "### Instruction: Retrieve names of people with 'brand manager' roles. \n\n### Response:\nSELECT first_name, last_name FROM people WHERE job_title LIKE '%brand manager%';"
+    },
+    {
+      "inputs": "### Instruction: Identify companies with 'space exploration' in their industry descriptions. \n\n### Response:\nSELECT company_name FROM company WHERE company_overview LIKE '%space exploration%';"
+    },
+    {
+      "inputs": "### Instruction: Find people with 'social media manager' roles. \n\n### Response:\nSELECT first_name, last_name FROM people WHERE job_title LIKE '%social media manager%';"
+    },
+    {
+      "inputs": "### Instruction: List companies with 'artificial intelligence' in their industry descriptions. \n\n### Response:\nSELECT company_name FROM company WHERE company_overview LIKE '%artificial intelligence%';"
+    },
+    {
+      "inputs": "### Instruction: Retrieve people with 'user experience' roles. \n\n### Response:\nSELECT first_name, last_name FROM people WHERE job_title LIKE '%user experience%';"
+    },
+    {
+      "inputs": "### Instruction: Identify companies with 'green technology' in their industry descriptions. \n\n### Response:\nSELECT company_name FROM company WHERE company_overview LIKE '%green technology%';"
+    },
+    {
+      "inputs": "### Instruction: Find people with 'CRM' roles. \n\n### Response:\nSELECT first_name, last_name FROM people WHERE job_title LIKE '%CRM%';"
+    },
+    {
+      "inputs": "### Instruction: List companies with 'mobile applications' in their industry descriptions. \n\n### Response:\nSELECT company_name FROM company WHERE company_overview LIKE '%mobile applications%';"
+    },
+    {
+      "inputs": "### Instruction: Retrieve names of people with 'cloud architect' roles. \n\n### Response:\nSELECT first_name, last_name FROM people WHERE job_title LIKE '%cloud architect%';"
+    },
+    {
+      "inputs": "### Instruction: Identify companies with 'video game development' in their industry descriptions. \n\n### Response:\nSELECT company_name FROM company WHERE company_overview LIKE '%video game development%';"
+    },
+    {
+      "inputs": "### Instruction: Find people with 'digital strategist' roles. \n\n### Response:\nSELECT first_name, last_name FROM people WHERE job_title LIKE '%digital strategist%';"
+    },
+    {
+      "inputs": "### Instruction: List companies with 'internet of things' in their industry descriptions. \n\n### Response:\nSELECT company_name FROM company WHERE company_overview LIKE '%internet of things%';"
+    },
+    {
+      "inputs": "### Instruction: Retrieve people with 'business intelligence' roles. \n\n### Response:\nSELECT first_name, last_name FROM people WHERE job_title LIKE '%business intelligence%';"
+    },
+    {
+      "inputs": "### Instruction: Identify companies with 'virtual assistant' in their industry descriptions. \n\n### Response:\nSELECT company_name FROM company WHERE company_overview LIKE '%virtual assistant%';"
+    },
+    {
+      "inputs": "### Instruction: Find people with 'web developer' roles. \n\n### Response:\nSELECT first_name, last_name FROM people WHERE job_title LIKE '%web developer%';"
+    },
+    {
+      "inputs": "### Instruction: List companies with 'blockchain technology' in their industry descriptions. \n\n### Response:\nSELECT company_name FROM company WHERE company_overview LIKE '%blockchain technology%';"
+    },
+    {
+      "inputs": "### Instruction: Retrieve names of people with 'IT support' roles. \n\n### Response:\nSELECT first_name, last_name FROM people WHERE job_title LIKE '%IT support%';"
+    }
+  ]
+}
